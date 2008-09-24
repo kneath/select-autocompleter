@@ -8,11 +8,11 @@ SelectAutoComplter is a plugin for MooTools (1.2) that provides a way to create 
 * Company lists
 * Dropdowns with many items
 
-The Javascript is 100% unobtrusive and will fall back to a `<select>` tag for users without Javascript enabled.
+The Javascript is 100% unobtrusive and will fall back to a `<select>` tag for users without Javascript enabled. It's keyboard accessible and will respond to up/down arrow and enter/return keys as expected.
 
 ## How to use
 
-Usage is simple. Just call `new SelectAutoComplter(element)` on any `<select>` tag you would like to replace.  Your server will receive the same response as if the `<select>` was not replaced, so no backend work is needed.
+Usage is simple. Just call `new SelectAutoCompleter(element)` on any `<select>` tag you would like to replace.  Your server will receive the same response as if the `<select>` was not replaced, so no backend work is needed.
 
 See `index.html` for a working example.
 
