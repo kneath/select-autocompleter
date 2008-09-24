@@ -6,6 +6,14 @@
 ------------------------------------------------------------------------------------*/
 
 var SelectAutoCompleter = new Class({
+  Implements: [Events, Options],
+  
+  options:{
+    cutoffScore: 0.1,
+    templateAttributes: [],
+    template: "{highlightedText}"
+  },
+  
   select: null,
   // The input element to autocomplete on
   element: null,
@@ -19,8 +27,9 @@ var SelectAutoCompleter = new Class({
   // Contains the current filtered terms from the quicksilver search
   filteredTerms: [],
   
-  initialize: function(select){
+  initialize: function(select, options){
     this.select = $(select);
+    this.setOptions(options)
     
     // Setup the autocompleter element
     var wrapper = new Element('div', {'class': 'autocomplete'});
@@ -40,7 +49,12 @@ var SelectAutoCompleter = new Class({
     
     // Gather the data from the select tag
     this.select.getElements('option').each(function(option){
-      this.data[option.get('text')] = option.value;
+      var dataItem = {}
+      this.options.templateAttributes.each(function(attr){
+        dataItem[attr] = option.getAttribute(attr);
+      });
+      this.data[option.get('text')] = $merge(dataItem, {value: option.value});
+      
       this.terms.push(option.get('text'));
     }, this);
     
@@ -52,6 +66,8 @@ var SelectAutoCompleter = new Class({
     this.element.set('value', '');
     this.dropDown.setStyle('display', '');
     this.updateTermsList();
+    
+    this.fireEvent('onFocus');
   },
   
   onBlur: function(){
@@ -59,11 +75,12 @@ var SelectAutoCompleter = new Class({
     
     if (this.termChosen != null){
       this.element.set('value', this.termChosen);
-      this.select.set('value', this.data[this.termChosen]);
+      this.select.set('value', this.data[this.termChosen].value);
     }else{
       this.element.set('value', $(this.select.options[this.select.selectedIndex]).get('text'));      
     }
     
+    this.fireEvent('onBlur');
   },
   
   keyListener: function(event){
@@ -129,16 +146,31 @@ var SelectAutoCompleter = new Class({
     }
     
     this.filteredTerms.each(function(scoredTerm){
-      var choice = new Element('li');
       
-      var formattedString = scoredTerm[1];
+      
+      // Build the regular expression for highlighting matching terms
       var regExpString = ""
       letters.each(function(letter){
         regExpString += letter;
       });
+      
+      // Build a formatted string highlighting matches with <strong>
+      var formattedString = scoredTerm[1];
       var regexp = new RegExp("([" + regExpString + "])", "ig");
       formattedString = formattedString.replace(regexp, "<strong>$1</strong>");
-      choice.innerHTML =  formattedString;
+      
+      // Build the template
+      var template = {
+        highlightedText: formattedString,
+        rawText: scoredTerm[1]
+      }
+      this.options.templateAttributes.each(function(attr){
+        template["attr" + attr.capitalize()] = this.data[template.rawText][attr];
+      }, this);
+      
+      // Build the output element for the dropDown
+      var choice = new Element('li');
+      choice.innerHTML =  this.options.template.substitute(template);
       choice.setAttribute('rawText', scoredTerm[1]);
       
       choice.addEvent('click', function(){
@@ -154,7 +186,7 @@ var SelectAutoCompleter = new Class({
     // Build the terms
     this.terms.each(function(term){
       var score = term.toLowerCase().score(filter.toLowerCase())
-      if (score < 0.1) return;
+      if (score < this.options.cutoffScore) return;
       this.filteredTerms.push([score, term]);
     }, this);
     
