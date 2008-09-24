@@ -33,8 +33,8 @@ var SelectAutoCompleter = new Class({
     
     // Setup the autocompleter element
     var wrapper = new Element('div', {'class': 'autocomplete'});
-    this.element = new Element('input', {'class': 'textfield categories'});
-    this.dropDown = new Element('ul', {'class': 'auto-dropdown'});
+    this.element = new Element('input', {'class': 'textfield ' + this.select.className});
+    this.dropDown = new Element('ul', {'class': 'auto-dropdown ' + this.select.className});
     this.dropDown.setStyle('display', 'none');
     this.element.addEvent('focus', this.onFocus.bind(this));
     this.element.addEvent('blur', function(){ this.onBlur.delay(100, this); }.bind(this));
