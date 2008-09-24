@@ -2,6 +2,8 @@
 
 SelectAutoComplter is a plugin for MooTools (1.2) that provides a way to create an editable `<select>`.  It works by replacing a `<select>` in your document with a text field that uses the Quicksilver filtering algorithm to narrow down results.
 
+![Example Image](example_image.png)
+
 ### Recommended Uses:
 
 * User lists
