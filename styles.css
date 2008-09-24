@@ -1,0 +1,89 @@
+/*------------------------------------------------------------------------------------
+  @group Global Reset
+------------------------------------------------------------------------------------*/
+* {
+  padding:0;
+  margin:0;
+}
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, label, ul, ol, dl, fieldset, address { margin:1em 0; }
+li, dd { margin-left:5%; }
+fieldset { padding: .5em; }
+select option{ padding:0 5px; }
+
+.access{ display:none; } /* For accessibility related elements */
+.clear{ clear:both; height:0px; font-size:0px; line-height:0px; overflow:hidden; }
+a{ outline:none; }
+a img{ border:none; }
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+* html .clearfix {height: 1%;}
+.clearfix {display:inline-block;}
+.clearfix {display: block;}
+
+body{
+  padding:100px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:12px;
+  line-height:1.6;
+  color:#444;
+  background:#fff;
+}
+
+/* @end */
+
+
+/*------------------------------------------------------------------------------------
+  @group AutoCompleter Styles
+------------------------------------------------------------------------------------*/
+
+input.textfield{
+  width:175px;
+  padding-top:3px;
+  padding-bottom:3px;
+  padding-left:3px;
+  font-size:11px;
+  border:1px solid #bebebe;
+  border-right:1px solid #e6e6e6;
+  border-bottom:1px solid #e6e6e6;
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.autocomplete{
+  position:relative;
+  display:inline;
+}
+.autocomplete ul.auto-dropdown{
+  position:absolute;
+  top:18px;
+  left:0;
+  margin:0;
+  width:178px;
+  border:1px solid #bbb;
+  background:#fff;
+}
+.autocomplete ul.auto-dropdown li{
+  margin:0;
+  list-style-type:none;
+  padding:3px 10px;
+  color:#666;
+  border-top:1px solid #e5e5e5;
+  font-size:11px;
+  cursor:pointer;
+}
+.autocomplete ul.auto-dropdown li:first-child{
+  border-top:none;
+}
+.autocomplete ul.auto-dropdown li:hover, .autocomplete ul.auto-dropdown li.highlighted{
+  background:#fdffe5;
+}
+.autocomplete ul.auto-dropdown li strong{
+  color:#000;
+}
+
+/* @end */
