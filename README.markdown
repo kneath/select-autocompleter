@@ -14,7 +14,21 @@ The Javascript is 100% unobtrusive and will fall back to a `<select>` tag for us
 
 ## How to use
 
-Usage is simple. Just call `new SelectAutoCompleter(element)` on any `<select>` tag you would like to replace.  Your server will receive the same response as if the `<select>` was not replaced, so no backend work is needed.
+Usage is simple. Just call `new SelectAutoCompleter(element, options)` on any `<select>` tag you would like to replace.  Your server will receive the same response as if the `<select>` was not replaced, so no backend work is needed.
+  
+Any class names on the `<select>` element will be carried over to the `<input>` that replaces it as well as the `<ul>` containing the results.
+
+### Options
+
+* **cutoffScore** - A decimal between 0 and 1 determining what Quicksilver score to cut off results for. Default is 0.1. Use higher values to show more relevant, but less results.
+* **template** - A string describing the template for the drop down list item. Default variables available: rawText, highlightedText.  Default value is "{highlightedText}"  Use in conjunction with templateAttributes to build rich autocomplete lists.
+* **templateAttributes** - An array of attributes on the `<option>` element SelectAutoCompleter should use for it's template
+
+### Events
+
+There are two events mixed in - onFocus (when the autocompleter takes focus) and onBlur (when the autocompleter loses focus)
+
+### Example
 
 See `index.html` for a working example.
 

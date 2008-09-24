@@ -12,6 +12,7 @@
 </head>
 
 <body>
+  <h2>Simple Example</h2>
   <select id="autocomplete">
     <option value="NULL">Select a name...</option>
     <option value="0">Kamren Boyer</option>
@@ -69,6 +70,9 @@
     new SelectAutoCompleter('autocomplete');
   </script>
   
+  <pre><code>new SelectAutoCompleter('autocomplete');</code></pre>
+  
+  <h2>Example with rich list</h2>
   <select id="autocomplete-users" class="userlist">
     <option value="0" email="felicia@lakin.uk" avatar="http://www.gravatar.com/avatar/d3de0f5b65c85339cbe08f6fbbd388dc?s=16&d=wavatar">Meda Ankunding</option>
     <option value="1" email="mauricio.becker@christiansengislason.info" avatar="http://www.gravatar.com/avatar/ec31a8d739174121e11c0f32405c91a6?s=16&d=wavatar">Vance Purdy</option>
@@ -127,5 +131,9 @@
       template: '<img src="{attrAvatar}" alt="{rawText}" class="avatar" /> <h5>{highlightedText}</h5> <p>{attrEmail}</p>'
     });
   </script>
+<pre><code>new SelectAutoCompleter('autocomplete-users', {
+  templateAttributes: ["email", "avatar"],
+  template: '&lt;img src=&quot;{attrAvatar}&quot; alt=&quot;{rawText}&quot; class=&quot;avatar&quot; /&gt; &lt;h5&gt;{highlightedText}&lt;/h5&gt; &lt;p&gt;{attrEmail}&lt;/p&gt;'
+});</code>
 </body>
 </html>
