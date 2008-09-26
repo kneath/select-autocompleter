@@ -1,0 +1,200 @@
+/*------------------------------------------------------------------------------------
+  @group Global Reset
+------------------------------------------------------------------------------------*/
+* {
+  padding:0;
+  margin:0;
+}
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, label, ul, ol, dl, fieldset, address { margin:1em 0; }
+li, dd { margin-left:5%; }
+fieldset { padding: .5em; }
+select option{ padding:0 5px; }
+
+.access{ display:none; } /* For accessibility related elements */
+.clear{ clear:both; height:0px; font-size:0px; line-height:0px; overflow:hidden; }
+a{ outline:none; }
+a img{ border:none; }
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+* html .clearfix {height: 1%;}
+.clearfix {display:inline-block;}
+.clearfix {display: block;}
+
+/* @end */
+
+body{
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color:#000;
+  background:#fff;
+  font-size:12px;
+}
+
+/*------------------------------------------------------------------------------------
+  @group Title Bar
+------------------------------------------------------------------------------------*/
+
+#title{
+  padding:10px 20px;
+  background:#000;
+  color:#fff;
+  overflow:auto;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
+  border-bottom:2px solid #ccc;
+}
+
+#title h1{
+  float:left;
+  margin:0;
+  font-size:20px;
+  font-weight:normal;
+}
+
+#title ul{
+  margin:0;
+  float:right;
+}
+#title ul li{
+  list-style-type:none;
+  margin:0;
+  display:inline;
+  padding-left:10px;
+  font-size:12px;
+  color:#999;
+}
+#title p{ display:none; }
+
+/* @end */
+
+/*------------------------------------------------------------------------------------
+  @group General Styles
+------------------------------------------------------------------------------------*/
+
+a{
+  text-decoration:none;
+}
+
+h2{
+  margin:0;
+  font-size:12px;
+  text-transform:uppercase;
+}
+
+h3{
+  margin:0;
+  font-size:1em;
+  font-weight:normal;
+}
+
+.number_value {
+	color: red;
+}
+
+.string_value {
+	color: green;
+}
+
+.regexp_value {
+	color: olive;
+}
+
+.boolean_value {
+	color: red;
+}
+
+.dom_value {
+	color: purple;
+}
+
+.undefined_value, .null_value {
+	color: gray;
+}
+
+/* @end */
+
+/*------------------------------------------------------------------------------------
+  @group List
+------------------------------------------------------------------------------------*/
+
+#list{
+  float:left;
+  width:300px;
+  padding:10px 20px;;
+  background:#f1f1f1;
+}
+
+#list ul.specs{
+  margin:15px 0;
+}
+#list ul.specs li{
+  margin:2px 0;
+  padding:3px 5px 4px 5px;
+  list-style-type:none;
+  background:#fff;
+  color:#ccc;
+  border-left:2px solid #fff;
+}
+#list a{
+  color:#999;
+}
+
+#list ul.specs li.success{
+  border-left-color:#087100;
+  color:#666;
+}
+#list ul.specs li.success a{ color:#000; }
+
+#list ul.specs li.exception{
+  border-left-color:#cf1800;
+  color:#cf1800;
+}
+#list ul.specs li.exception h3{ font-weight:bold;}
+#list ul.specs li.exception a{ color:#cf1800; }
+
+/* @end */
+
+/*------------------------------------------------------------------------------------
+  @group Log
+------------------------------------------------------------------------------------*/
+
+#log{
+  padding:10px 0;
+  margin-left:360px;
+  margin-right:20px;
+}
+
+#log ul.specs{
+  margin:15px 0;
+}
+#log ul.specs li{
+  margin:2px 0;
+  padding:3px 5px 4px 5px;
+  list-style-type:none;
+  color:#ccc;
+  border:1px solid #eee;
+}
+#log ul.specs li li{ font-size:11px; }
+#log a{
+  color:#999;
+}
+
+#log ul.specs li.success{
+  border-left-color:#087100;
+  color:#000;
+}
+#log ul.specs li.success a{ color:#000; }
+
+#log ul.specs li.exception{
+  border-left:2px solid #cf1800;
+  color:#cf1800;
+  background:#fdffe4;
+}
+#log ul.specs li.exception h3{ font-weight:bold;}
+#log ul.specs li.exception a{ color:#cf1800; }
+
+/* @end */
