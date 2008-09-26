@@ -1,200 +1,214 @@
-/*------------------------------------------------------------------------------------
-  @group Global Reset
-------------------------------------------------------------------------------------*/
+@CHARSET "UTF-8";
+
+/* --------------------
+ * @Layout
+ */
+
+html {
+  overflow: hidden;
+}
+
+body, #jsspec_container {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#title {
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0px;    
+  left: 0px;
+  width: 100%;
+  height: 40px;
+  overflow: hidden;
+}
+
+#list {
+  padding: 0;
+  margin: 0;
+  position: absolute;    
+  top: 40px;
+  left: 0px;
+  bottom: 0px;
+  overflow: auto;    
+  width: 250px;    
+  _height:expression(document.body.clientHeight-40);
+}
+
+#log {
+  padding: 0;
+  margin: 0;
+  position: absolute;    
+  top: 40px;
+  left: 250px;
+  right: 0px;
+  bottom: 0px;
+  overflow: auto;
+  _height:expression(document.body.clientHeight-40);
+  _width:expression(document.body.clientWidth-250);
+}
+
+
+
+/* --------------------
+ * @Decorations and colors
+ */
 * {
-  padding:0;
-  margin:0;
-}
-h1, h2, h3, h4, h5, h6, p, pre, blockquote, label, ul, ol, dl, fieldset, address { margin:1em 0; }
-li, dd { margin-left:5%; }
-fieldset { padding: .5em; }
-select option{ padding:0 5px; }
-
-.access{ display:none; } /* For accessibility related elements */
-.clear{ clear:both; height:0px; font-size:0px; line-height:0px; overflow:hidden; }
-a{ outline:none; }
-a img{ border:none; }
-
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-* html .clearfix {height: 1%;}
-.clearfix {display:inline-block;}
-.clearfix {display: block;}
-
-/* @end */
-
-body{
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color:#000;
-  background:#fff;
-  font-size:12px;
+	padding: 0;
+	margin: 0;
+	font-family: "Lucida Grande", Helvetica, sans-serif;
 }
 
-/*------------------------------------------------------------------------------------
-  @group Title Bar
-------------------------------------------------------------------------------------*/
-
-#title{
-  padding:10px 20px;
-  background:#000;
-  color:#fff;
-  overflow:auto;
-  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", sans-serif;
-  border-bottom:2px solid #ccc;
+li {
+	list-style: none;
 }
 
-#title h1{
-  float:left;
-  margin:0;
-  font-size:20px;
-  font-weight:normal;
+/* hiding subtitles */
+h2 {
+	display: none;
 }
 
-#title ul{
-  margin:0;
-  float:right;
-}
-#title ul li{
-  list-style-type:none;
-  margin:0;
-  display:inline;
-  padding-left:10px;
-  font-size:12px;
-  color:#999;
-}
-#title p{ display:none; }
-
-/* @end */
-
-/*------------------------------------------------------------------------------------
-  @group General Styles
-------------------------------------------------------------------------------------*/
-
-a{
-  text-decoration:none;
+/* title section */
+div#title {
+	padding: 0em 0.5em;
 }
 
-h2{
-  margin:0;
-  font-size:12px;
-  text-transform:uppercase;
+div#title h1 {
+	font-size: 1.5em;
+	float: left;
 }
 
-h3{
-  margin:0;
-  font-size:1em;
-  font-weight:normal;
+div#title ul li {
+	float: left;
+	padding: 0.5em 0em 0.5em 0.75em;
 }
 
-.number_value {
-	color: red;
+div#title p {
+	float:right;
+	margin-right:1em;
+	font-size: 0.75em;
 }
 
-.string_value {
-	color: green;
+/* spec container */
+ul.specs {
+	margin: 0.5em;
+}
+ul.specs li {
+	margin-bottom: 0.1em;
 }
 
-.regexp_value {
+/* spec title */
+ul.specs li h3 {
+	font-weight: bold;
+	font-size: 0.75em;
+	padding: 0.2em 1em;
+}
+
+/* example container */
+ul.examples li {
+	border-style: solid;
+	border-width: 1px 1px 1px 5px;
+	margin: 0.2em 0em 0.2em 1em;
+}
+
+/* example title */
+ul.examples li h4 {
+	font-weight: normal;
+	font-size: 0.75em;
+	margin-left: 1em;
+}
+
+/* example explaination */
+ul.examples li div {
+	padding: 1em 2em;
+	font-size: 0.75em;
+}
+
+/* styles for ongoing, success, failure, error */
+div.success, div.success a {
+	color: #FFFFFF;
+	background-color: #65C400;
+}
+
+ul.specs li.success h3, ul.specs li.success h3 a {
+	color: #FFFFFF;
+	background-color: #65C400;
+}
+
+ul.examples li.success, ul.examples li.success a {
+	color: #3D7700;
+	background-color: #DBFFB4;
+	border-color: #65C400;
+}
+
+div.exception, div.exception a {
+	color: #FFFFFF;
+	background-color: #C20000;
+}
+
+ul.specs li.exception h3, ul.specs li.exception h3 a {
+	color: #FFFFFF;
+	background-color: #C20000;
+}
+
+ul.examples li.exception, ul.examples li.exception a {
+	color: #C20000;
+	background-color: #FFFBD3;
+	border-color: #C20000;
+}
+
+div.ongoing, div.ongoing a {
+	color: #000000;
+	background-color: #FFFF80;
+}
+
+ul.specs li.ongoing h3, ul.specs li.ongoing h3 a {
+	color: #000000;
+	background-color: #FFFF80;
+}
+
+ul.examples li.ongoing, ul.examples li.ongoing a {
+	color: #000000;
+	background-color: #FFFF80;
+	border-color: #DDDD00;
+}
+
+
+
+/* --------------------
+ * values
+ */
+.number_value, .string_value, .regexp_value, .boolean_value, .dom_value {
+	font-family: monospace;
+	color: blue;
+}
+.object_value, .array_value {
+	line-height: 2em;
+	padding: 0.1em 0.2em;
+	margin: 0.1em 0;
+}
+.date_value {
+	font-family: monospace;
 	color: olive;
 }
-
-.boolean_value {
+.undefined_value, .null_value {
+	font-style: italic;
+	color: blue;
+}
+.dom_attr_name {
+}
+.dom_attr_value {
 	color: red;
 }
-
-.dom_value {
-	color: purple;
-}
-
-.undefined_value, .null_value {
+.dom_path {
+	font-size: 0.75em;
 	color: gray;
 }
-
-/* @end */
-
-/*------------------------------------------------------------------------------------
-  @group List
-------------------------------------------------------------------------------------*/
-
-#list{
-  float:left;
-  width:300px;
-  padding:10px 20px;;
-  background:#f1f1f1;
+strong {
+	font-weight: normal;
+	background-color: #FFC6C6;
 }
-
-#list ul.specs{
-  margin:15px 0;
-}
-#list ul.specs li{
-  margin:2px 0;
-  padding:3px 5px 4px 5px;
-  list-style-type:none;
-  background:#fff;
-  color:#ccc;
-  border-left:2px solid #fff;
-}
-#list a{
-  color:#999;
-}
-
-#list ul.specs li.success{
-  border-left-color:#087100;
-  color:#666;
-}
-#list ul.specs li.success a{ color:#000; }
-
-#list ul.specs li.exception{
-  border-left-color:#cf1800;
-  color:#cf1800;
-}
-#list ul.specs li.exception h3{ font-weight:bold;}
-#list ul.specs li.exception a{ color:#cf1800; }
-
-/* @end */
-
-/*------------------------------------------------------------------------------------
-  @group Log
-------------------------------------------------------------------------------------*/
-
-#log{
-  padding:10px 0;
-  margin-left:360px;
-  margin-right:20px;
-}
-
-#log ul.specs{
-  margin:15px 0;
-}
-#log ul.specs li{
-  margin:2px 0;
-  padding:3px 5px 4px 5px;
-  list-style-type:none;
-  color:#ccc;
-  border:1px solid #eee;
-}
-#log ul.specs li li{ font-size:11px; }
-#log a{
-  color:#999;
-}
-
-#log ul.specs li.success{
-  border-left-color:#087100;
-  color:#000;
-}
-#log ul.specs li.success a{ color:#000; }
-
-#log ul.specs li.exception{
-  border-left:2px solid #cf1800;
-  color:#cf1800;
-  background:#fdffe4;
-}
-#log ul.specs li.exception h3{ font-weight:bold;}
-#log ul.specs li.exception a{ color:#cf1800; }
-
-/* @end */
