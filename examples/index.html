@@ -67,10 +67,10 @@
     <option value="49">Dr. Leanne Hansen</option>
   </select>
   <script type="text/javascript" charset="utf-8">
-    new SelectAutoCompleter('autocomplete');
+    new SelectAutocompleter('autocomplete');
   </script>
   
-  <pre><code>new SelectAutoCompleter('autocomplete');</code></pre>
+  <pre><code>new SelectAutocompleter('autocomplete');</code></pre>
   
   <h2>Example with rich list</h2>
   <select id="autocomplete-users" class="userlist">
@@ -126,12 +126,12 @@
     <option value="49" email="teresa@bergstrom.co.uk" avatar="http://www.gravatar.com/avatar/7786974ec12a4a8683de4b5e668757fc?s=28&d=wavatar">Mrs. Floy Haag</option>
   </select>
   <script type="text/javascript" charset="utf-8">
-    new SelectAutoCompleter('autocomplete-users', {
+    new SelectAutocompleter('autocomplete-users', {
       templateAttributes: ["email", "avatar"],
       template: '<img src="{attrAvatar}" alt="{rawText}" class="avatar" /> <h5>{highlightedText}</h5> <p>{attrEmail}</p>'
     });
   </script>
-<pre><code>new SelectAutoCompleter('autocomplete-users', {
+<pre><code>new SelectAutocompleter('autocomplete-users', {
   templateAttributes: ["email", "avatar"],
   template: '&lt;img src=&quot;{attrAvatar}&quot; alt=&quot;{rawText}&quot; class=&quot;avatar&quot; /&gt; &lt;h5&gt;{highlightedText}&lt;/h5&gt; &lt;p&gt;{attrEmail}&lt;/p&gt;'
 });</code>

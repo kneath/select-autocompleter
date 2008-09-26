@@ -1,11 +1,35 @@
-/*------------------------------------------------------------------------------------
-  Plugin: SelectAutoComplter
-  Description: Autocompleter for select fields
-  Author: Kyle Neath
-  Dependencies: mootools.v1.2, quicksilver
-------------------------------------------------------------------------------------*/
+/*
+  Script: select_autocompleter.js
+    SelectoAutocompleter provides a way to make editable combo box (a select tag in HTML).
 
-var SelectAutoCompleter = new Class({
+  License:
+    MIT-style license.
+*/
+
+/*
+  Class: SelectAutocompleter
+  
+    To activate the control, call `new SelectAutocompleter(element, options)` on any `<select>` 
+    tag you would like to replace.  Your server will receive the same response as if the `<select>` 
+    was not replaced, so no backend work is needed.
+
+    Any class names on the `<select>` element will be carried over to the `<input>` that replaces 
+    it as well as the `<ul>` containing the results.
+
+
+  Options:
+
+    cutoffScore:          A decimal between 0 and 1 determining what Quicksilver score to cut off results 
+                          for. Default is 0.1. Use higher values to show more relevant, but less results.
+                          
+    template:             A string describing the template for the drop down list item. Default variables 
+                          available: rawText, highlightedText.  Default value is "{highlightedText}"  
+                          Use in conjunction with templateAttributes to build rich autocomplete lists.
+                          
+    templateAttributes:   An array of attributes on the `<option>` element SelectAutocompleter should use 
+                          for its template
+*/
+var SelectAutocompleter = new Class({
   Implements: [Events, Options],
   
   options:{
