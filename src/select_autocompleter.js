@@ -184,8 +184,10 @@ var SelectAutocompleter = new Class({
       
       // Build a formatted string highlighting matches with <strong>
       var formattedString = scoredTerm[1];
-      var regexp = new RegExp("([" + regExpString + "])", "ig");
-      formattedString = formattedString.replace(regexp, "<strong>$1</strong>");
+      if (filterValue.length > 0){
+        var regexp = new RegExp("([" + regExpString + "])", "ig");
+        formattedString = formattedString.replace(regexp, "<strong>$1</strong>");
+      }
       
       // Build the template
       var template = {
