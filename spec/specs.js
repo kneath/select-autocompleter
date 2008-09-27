@@ -128,5 +128,15 @@ describe("Keyboard Interaction", {
     input.fireEvent('keyup', {key: 'up'});
     input.fireEvent('keyup', {key: 'up'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
+  },
+  
+  'should highlight the choice while hovering': function(){
+    dropdown.getElements('li')[2].fireEvent('mouseover');
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
+  },
+  'should move the keyboard from where the mouse is hovering': function(){
+    dropdown.getElements('li')[2].fireEvent('mouseover');
+    input.fireEvent('keyup', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
   }
 });

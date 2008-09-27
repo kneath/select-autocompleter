@@ -86,7 +86,7 @@ input.textfield{
 .autocomplete ul.auto-dropdown li:first-child{
   border-top:none;
 }
-.autocomplete ul.auto-dropdown li:hover, .autocomplete ul.auto-dropdown li.highlighted{
+.autocomplete ul.auto-dropdown li.highlighted{
   background:#fdffe5;
 }
 .autocomplete ul.auto-dropdown li strong{

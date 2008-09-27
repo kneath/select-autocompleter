@@ -108,53 +108,57 @@ var SelectAutocompleter = new Class({
   },
   
   keyListener: function(event){
+    // Escape means we want out!
     if (event.key == "esc"){
       this.onBlur();
       this.element.blur();
-    }else if(event.key == "up"){
+    
+    // Up/Down arrows to navigate the list
+    }else if(event.key == "up" || event.key == "down"){
       var choices = this.dropDown.getElements('li');
       if (choices.length == 0) return;
       
-      if (this.highlightedChoice == null){
-        this.highlightedChoice = choices[0];
-        this.highlightedChoice.addClass('highlighted');
-      }else{
-        this.highlightedChoice.removeClass('highlighted');
-        if (choices.indexOf(this.highlightedChoice) == -1 || choices.indexOf(this.highlightedChoice) == 0){
-          this.highlightedChoice = choices[0];
-          this.highlightedChoice.addClass('highlighted');
-        }else{
-          this.highlightedChoice = choices[choices.indexOf(this.highlightedChoice) - 1];
-          this.highlightedChoice.addClass('highlighted');
-        }
+      // If there's no previous choice, or the current choice has been filtered out
+      if (this.highlightedChoice == null || choices.indexOf(this.highlightedChoice) == -1){
+        this.highlight(choices[0]);
+        return;
       }
       
-    }else if(event.key == "down"){
-      var choices = this.dropDown.getElements('li');
-      if (choices.length == 0) return;
-      
-      if (this.highlightedChoice == null){
-        this.highlightedChoice = choices[0];
-        this.highlightedChoice.addClass('highlighted');
-      }else{
-        this.highlightedChoice.removeClass('highlighted');
-        if (choices.indexOf(this.highlightedChoice) == -1){
-          this.highlightedChoice = choices[0];
-          this.highlightedChoice.addClass('highlighted');
-        }else if(choices.indexOf(this.highlightedChoice) == choices.length - 1){
-          this.highlightedChoice = choices[choices.length - 1];
-          this.highlightedChoice.addClass('highlighted');
-        }else{
-          this.highlightedChoice = choices[choices.indexOf(this.highlightedChoice) + 1];
-          this.highlightedChoice.addClass('highlighted');
-        }
+      switch(event.key){
+        case "up":
+          // Are we at the top of the list already?
+          if (choices.indexOf(this.highlightedChoice) == 0){
+            this.highlight(choices[0]);
+          // Otherwise, move down one choice
+          }else{
+            this.highlight(choices[choices.indexOf(this.highlightedChoice) - 1]);
+          }
+        break;
+        case "down":
+          // Are we at the bottom of the list already?
+          if(choices.indexOf(this.highlightedChoice) == choices.length - 1){
+            this.highlight(choices[choices.length - 1]);
+          // Otherwise, move up one choice
+          }else{
+            this.highlight(choices[choices.indexOf(this.highlightedChoice) + 1]);
+          }
+        break;
       }
+    
+    // Select an item through the keyboard
     }else if (event.key == "return" || event.key == "enter"){
       this.termChosen = this.highlightedChoice.getAttribute('rawText');
       this.element.blur();
+      
+    // Regular keys (filtering for something)
     }else{
       this.updateTermsList();
     }
+  },
+  
+  highlight: function(elem){
+    if (this.highlightedChoice) this.highlightedChoice.removeClass('highlighted');
+    this.highlightedChoice = elem.addClass('highlighted');
   },
   
   updateTermsList: function(){
@@ -200,6 +204,8 @@ var SelectAutocompleter = new Class({
       choice.addEvent('click', function(){
         this.termChosen = scoredTerm[1];
       }.bind(this));
+      choice.addEvent('mouseover', this.highlight.bind(this, choice));
+      
       this.dropDown.appendChild(choice);
     }, this);
   },
