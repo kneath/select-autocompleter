@@ -69,6 +69,12 @@ describe("Keyboard Interaction", {
     $('autoCompleterWrapper').remove();
   },
   
+  'after each': function(){
+    input.value = '';
+    input.fireEvent('keyup', {key: ' '});
+    input.fireEvent('blur');
+  },
+  
   
   'should show the drop down on focus': function(){
     value_of(dropdown.getStyle('display')).should_be('none');
@@ -82,15 +88,45 @@ describe("Keyboard Interaction", {
     value_of(dropdown.getElements('li')).should_have_at_most(1, "items");
   },
   'should move down the list when the down arrow is pressed': function(){
-    // TODO
+    input.fireEvent('focus');
+    input.fireEvent('keyup', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
+    input.fireEvent('keyup', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
   },
   'should not go past the last item when the down arrow is pressed': function(){
-    // TODO
+    input.fireEvent('focus');
+    value_of(dropdown.getElements('li')).should_have_at_most(6, "items");
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li').getLast());
   },
   'should move up the list when the down arrow is pressed': function(){
-    // TODO
+    input.fireEvent('focus');
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
+    input.fireEvent('keyup', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
+    input.fireEvent('keyup', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
   },
   'should not go past the first item when the up arrow is pressed': function(){
-    // TODO
+    input.fireEvent('focus');
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keyup', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
+    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keyup', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
   }
 });
