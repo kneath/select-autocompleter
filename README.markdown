@@ -41,4 +41,3 @@ License is MIT. See LICENSE file.
 * Need to refactor the keyboardListener function, it's messy
 * Add a trigger to show the list without typing in the box (similar to clicking the down arrow on a select field)
 * Add in effects to make it smoother
-* Test thoroughly
