@@ -71,7 +71,7 @@ describe("Keyboard Interaction", {
   
   'after each': function(){
     input.value = '';
-    input.fireEvent('keyup', {key: ' '});
+    input.fireEvent('keydown', {key: ' '});
     input.fireEvent('blur');
   },
   
@@ -84,49 +84,49 @@ describe("Keyboard Interaction", {
   'should filter the list when characters are typed in': function(){
     input.fireEvent('focus');
     input.value = "kamr";
-    input.fireEvent('keyup', {key: 'r'});
+    input.fireEvent('keydown', {key: 'r'});
     value_of(dropdown.getElements('li')).should_have_at_most(1, "items");
   },
   'should move down the list when the down arrow is pressed': function(){
     input.fireEvent('focus');
-    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
-    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
   },
   'should not go past the last item when the down arrow is pressed': function(){
     input.fireEvent('focus');
     value_of(dropdown.getElements('li')).should_have_at_most(6, "items");
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li').getLast());
   },
   'should move up the list when the down arrow is pressed': function(){
     input.fireEvent('focus');
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
-    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
-    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
   },
   'should not go past the first item when the up arrow is pressed': function(){
     input.fireEvent('focus');
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
-    input.fireEvent('keyup', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
+    input.fireEvent('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
-    input.fireEvent('keyup', {key: 'up'});
-    input.fireEvent('keyup', {key: 'up'});
-    input.fireEvent('keyup', {key: 'up'});
-    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
   },
   
@@ -136,7 +136,7 @@ describe("Keyboard Interaction", {
   },
   'should move the keyboard from where the mouse is hovering': function(){
     dropdown.getElements('li')[2].fireEvent('mouseover');
-    input.fireEvent('keyup', {key: 'up'});
+    input.fireEvent('keydown', {key: 'up'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
   }
 });

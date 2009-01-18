@@ -62,7 +62,7 @@ var SelectAutocompleter = new Class({
     this.dropDown.setStyle('display', 'none');
     this.element.addEvent('focus', this.onFocus.bind(this));
     this.element.addEvent('blur', function(){ this.onBlur.delay(100, this); }.bind(this));
-    this.element.addEvent('keyup', this.keyListener.bind(this));
+    this.element.addEvent('keydown', this.keyListener.bind(this));
     
     
     // Hide the select tag
@@ -147,6 +147,7 @@ var SelectAutocompleter = new Class({
     
     // Select an item through the keyboard
     }else if (event.key == "return" || event.key == "enter"){
+      event.stop(); // to prevent the form from being submitted
       this.termChosen = this.highlightedChoice.getAttribute('rawText');
       this.element.blur();
       
