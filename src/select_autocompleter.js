@@ -55,7 +55,7 @@ var SelectAutocompleter = Class.create({
     this.setOptions(options);
     
     // Convert MooTools type templates to Prototype type templates
-    this.options.template = this.options.template.replace(/{(.+)}/g, "#{$1}");
+    this.options.template = this.options.template.replace(/{([A-Za-z0-9]+)}/g, "#{$1}");
     
     // Setup the autocompleter element
     var wrapper = new Element('div', {'class': 'autocomplete'});
