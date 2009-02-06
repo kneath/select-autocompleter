@@ -100,7 +100,7 @@ var SelectAutocompleter = Class.create({
   },
   
   onBlur: function(){
-    this.dropDown.setStyle('display', 'none');
+    this.dropDown.hide();
     
     if (this.termChosen != null){
       this.element.value = this.termChosen;
@@ -112,14 +112,16 @@ var SelectAutocompleter = Class.create({
   },
   
   keyListener: function(event){
+    var keyPressed = event.keyCode || event.which; // Alas, Prototype.
+    
     // Escape means we want out!
-    if (event.key == "esc"){
+    if (keyPressed == Event.KEY_ESC){
       this.onBlur();
       this.element.blur();
     
     // Up/Down arrows to navigate the list
-    }else if(event.key == "up" || event.key == "down"){
-      var choices = this.dropDown.getElements('li');
+    }else if(keyPressed == Event.KEY_UP || keyPressed == Event.KEY_DOWN){
+      var choices = this.dropDown.getElementsBySelector('li');
       if (choices.length == 0) return;
       
       // If there's no previous choice, or the current choice has been filtered out
@@ -128,8 +130,8 @@ var SelectAutocompleter = Class.create({
         return;
       }
       
-      switch(event.key){
-        case "up":
+      switch(keyPressed){
+        case Event.KEY_UP:
           // Are we at the top of the list already?
           if (choices.indexOf(this.highlightedChoice) == 0){
             this.highlight(choices[0]);
@@ -138,7 +140,7 @@ var SelectAutocompleter = Class.create({
             this.highlight(choices[choices.indexOf(this.highlightedChoice) - 1]);
           }
         break;
-        case "down":
+        case Event.KEY_DOWN:
           // Are we at the bottom of the list already?
           if(choices.indexOf(this.highlightedChoice) == choices.length - 1){
             this.highlight(choices[choices.length - 1]);
@@ -150,7 +152,7 @@ var SelectAutocompleter = Class.create({
       }
     
     // Select an item through the keyboard
-    }else if (event.key == "return" || event.key == "enter"){
+    }else if (keyPressed == Event.KEY_RETURN || keyPressed == Event.KEY_ENTER){
       event.stop(); // to prevent the form from being submitted
       this.termChosen = this.highlightedChoice.getAttribute('rawText');
       this.element.blur();
@@ -170,16 +172,15 @@ var SelectAutocompleter = Class.create({
     var filterValue = this.element.value;
     this.buildFilteredTerms(filterValue);
     
-    this.dropDown.empty();
+    this.dropDown.update('');
     
     var letters = []
     for(var i=0; i<filterValue.length; i++){
       var letter = filterValue.substr(i, 1);
-      if (letters.indexOf(letter) != -1) letters.push(letter);
+      if (letters.indexOf(letter) == -1) letters.push(letter);
     }
     
     this.filteredTerms.each(function(scoredTerm){
-      
       
       // Build the regular expression for highlighting matching terms
       var regExpString = ""
