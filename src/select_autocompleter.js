@@ -51,6 +51,14 @@ var SelectAutocompleter = Class.create({
   filteredTerms: [],
   
   initialize: function(select, options){
+    // For some reason Prototype's classes bleed (?!)
+    this.select = null;
+    this.element = null;
+    this.dropDown = null;
+    this.data = {};
+    this.terms = [];
+    
+    // Setup
     this.select = $(select);
     this.setOptions(options);
     
