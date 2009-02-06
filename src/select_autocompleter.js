@@ -162,8 +162,8 @@ var SelectAutocompleter = Class.create({
   },
   
   highlight: function(elem){
-    if (this.highlightedChoice) this.highlightedChoice.removeClass('highlighted');
-    this.highlightedChoice = elem.addClass('highlighted');
+    if (this.highlightedChoice) this.highlightedChoice.removeClassName('highlighted');
+    this.highlightedChoice = elem.addClassName('highlighted');
   },
   
   updateTermsList: function(){
@@ -175,7 +175,7 @@ var SelectAutocompleter = Class.create({
     var letters = []
     for(var i=0; i<filterValue.length; i++){
       var letter = filterValue.substr(i, 1);
-      if (!letters.contains(letter)) letters.push(letter);
+      if (letters.indexOf(letter) != -1) letters.push(letter);
     }
     
     this.filteredTerms.each(function(scoredTerm){
