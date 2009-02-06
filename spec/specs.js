@@ -15,7 +15,7 @@ var setupHTML = function(){
     + '  <option value="3">Thalia Cole II</option>'
     + '  <option value="4">Felix Wintheiser</option>'
     + '</select>';
-  document.body.appendChild(new Element('div', {id: 'autoCompleterWrapper', style:'display:none', html: html}))
+  document.body.appendChild(new Element('div', {id: 'autoCompleterWrapper', style:'display:none'}).update(html))
 }
 
 describe("Initialization", {
@@ -33,27 +33,27 @@ describe("Initialization", {
     value_of($('autocomplete').getStyle('display')).should_be('none');
   },
   'should create an autocomplete div wrapper': function(){
-    value_of(wrapper.getElements('div.autocomplete')).should_have_exactly(1, "items");
+    value_of(wrapper.getElementsBySelector('div.autocomplete')).should_have_exactly(1, "items");
   },
   'should create an input element': function(){
-    value_of(wrapper.getElements('.autocomplete input')).should_have_exactly(1, "items");
-    value_of(wrapper.getElement('.autocomplete input')).should_be(Instance.element)
+    value_of(wrapper.getElementsBySelector('.autocomplete input')).should_have_exactly(1, "items");
+    value_of(wrapper.down('.autocomplete input')).should_be(Instance.element)
   },
   'should create a dropdown list': function(){
-    value_of(wrapper.getElements('ul.auto-dropdown')).should_have_exactly(1, "items");
-    value_of(wrapper.getElement('ul.auto-dropdown')).should_be(Instance.dropDown);
+    value_of(wrapper.getElementsBySelector('ul.auto-dropdown')).should_have_exactly(1, "items");
+    value_of(wrapper.down('ul.auto-dropdown')).should_be(Instance.dropDown);
   },
   'should hide the dropdown list on construction': function(){
-    value_of(wrapper.getElement('ul.auto-dropdown').getStyle('display')).should_be('none');
+    value_of(wrapper.down('ul.auto-dropdown').getStyle('display')).should_be('none');
   },
   'should carry classes over to input element': function(){
-    var input = wrapper.getElement('input');
-    value_of(input.hasClass('testClass')).should_be_true();
-    value_of(input.hasClass('textfield')).should_be_true();
+    var input = wrapper.down('input');
+    value_of(input.hasClassName('testClass')).should_be_true();
+    value_of(input.hasClassName('textfield')).should_be_true();
   },
   'should carry classes over to dropdown element': function(){
-    var input = wrapper.getElement('ul.auto-dropdown');
-    value_of(input.hasClass('testClass')).should_be_true();
+    var input = wrapper.down('ul.auto-dropdown');
+    value_of(input.hasClassName('testClass')).should_be_true();
   }
 });
 
@@ -71,72 +71,72 @@ describe("Keyboard Interaction", {
   
   'after each': function(){
     input.value = '';
-    input.fireEvent('keydown', {key: ' '});
-    input.fireEvent('blur');
+    input.fire('keydown', {key: ' '});
+    input.fire('blur');
   },
   
   
   'should show the drop down on focus': function(){
     value_of(dropdown.getStyle('display')).should_be('none');
-    input.fireEvent('focus');
+    input.fire('focus');
     value_of(dropdown.getStyle('display')).should_not_be('none');
   },
   'should filter the list when characters are typed in': function(){
-    input.fireEvent('focus');
+    input.fire('focus');
     input.value = "kamr";
-    input.fireEvent('keydown', {key: 'r'});
-    value_of(dropdown.getElements('li')).should_have_at_most(1, "items");
+    input.fire('keydown', {key: 'r'});
+    value_of(dropdown.getElementsBySelector('li')).should_have_at_most(1, "items");
   },
   'should move down the list when the down arrow is pressed': function(){
-    input.fireEvent('focus');
-    input.fireEvent('keydown', {key: 'down'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
-    input.fireEvent('keydown', {key: 'down'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
+    input.fire('focus');
+    input.fire('keydown', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
+    input.fire('keydown', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
   },
   'should not go past the last item when the down arrow is pressed': function(){
-    input.fireEvent('focus');
-    value_of(dropdown.getElements('li')).should_have_at_most(6, "items");
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li').getLast());
+    input.fire('focus');
+    value_of(dropdown.getElementsBySelector('li')).should_have_at_most(6, "items");
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li').getLast());
   },
   'should move up the list when the down arrow is pressed': function(){
-    input.fireEvent('focus');
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
-    input.fireEvent('keydown', {key: 'up'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
-    input.fireEvent('keydown', {key: 'up'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
+    input.fire('focus');
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[2]);
+    input.fire('keydown', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
+    input.fire('keydown', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
   },
   'should not go past the first item when the up arrow is pressed': function(){
-    input.fireEvent('focus');
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    input.fireEvent('keydown', {key: 'down'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
-    input.fireEvent('keydown', {key: 'up'});
-    input.fireEvent('keydown', {key: 'up'});
-    input.fireEvent('keydown', {key: 'up'});
-    input.fireEvent('keydown', {key: 'up'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[0]);
+    input.fire('focus');
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    input.fire('keydown', {key: 'down'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[2]);
+    input.fire('keydown', {key: 'up'});
+    input.fire('keydown', {key: 'up'});
+    input.fire('keydown', {key: 'up'});
+    input.fire('keydown', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
   },
   
   'should highlight the choice while hovering': function(){
-    dropdown.getElements('li')[2].fireEvent('mouseover');
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[2]);
+    dropdown.getElementsBySelector('li')[2].fire('mouseover');
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[2]);
   },
   'should move the keyboard from where the mouse is hovering': function(){
-    dropdown.getElements('li')[2].fireEvent('mouseover');
-    input.fireEvent('keydown', {key: 'up'});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElements('li')[1]);
+    dropdown.getElementsBySelector('li')[2].fire('mouseover');
+    input.fire('keydown', {key: 'up'});
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
   }
 });
