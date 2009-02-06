@@ -29,8 +29,7 @@
     templateAttributes:   An array of attributes on the `<option>` element SelectAutocompleter should use 
                           for its template
 */
-var SelectAutocompleter = new Class({
-  Implements: [Events, Options],
+var SelectAutocompleter = Class.create({
   
   options:{
     cutoffScore: 0.1,
@@ -60,30 +59,35 @@ var SelectAutocompleter = new Class({
     this.element = new Element('input', {'class': 'textfield ' + this.select.className});
     this.dropDown = new Element('ul', {'class': 'auto-dropdown ' + this.select.className});
     this.dropDown.setStyle('display', 'none');
-    this.element.addEvent('focus', this.onFocus.bind(this));
-    this.element.addEvent('blur', function(){ this.onBlur.delay(100, this); }.bind(this));
-    this.element.addEvent('keydown', this.keyListener.bind(this));
+    this.element.observe('focus', this.onFocus.bind(this));
+    this.element.observe('blur', function(){ this.onBlur.delay(100, this); }.bind(this));
+    this.element.observe('keydown', this.keyListener.bind(this));
     
     
     // Hide the select tag
-    this.select.setStyle('display', 'none');
+    this.select.hide();
     wrapper.appendChild(this.element);
     wrapper.appendChild(this.dropDown);
-    wrapper.inject(this.select, 'after');
+    this.select.insert({'after':wrapper});
     
     // Gather the data from the select tag
-    this.select.getElements('option').each(function(option){
+    this.select.getElementsBySelector('option').each(function(option){
       var dataItem = {}
       this.options.templateAttributes.each(function(attr){
         dataItem[attr] = option.getAttribute(attr);
       });
-      this.data[option.get('text')] = $merge(dataItem, {value: option.value});
+      var text = option.cleanWhitespace().firstChild.value;
+      this.data[text] = $H(dataItem).merge({value: option.value}).toObject();
       
-      this.terms.push(option.get('text'));
-    }, this);
+      this.terms.push(text);
+    }.bind(this));
     
     // Prepopulate the select tag's selected option
-    this.element.set('value', $(this.select.options[this.select.selectedIndex]).get('text'));
+    this.element.value =  $(this.select.options[this.select.selectedIndex]).cleanWhitespace().firstChild.value;
+  },
+  
+  setOptions: function(options){
+    Object.extend(this.options, options);
   },
   
   onFocus: function(){
