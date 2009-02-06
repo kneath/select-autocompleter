@@ -112,7 +112,7 @@ describe("Keyboard Interaction", {
     input.fire('keyup', {keyCode: Event.KEY_DOWN});
     input.fire('keyup', {keyCode: Event.KEY_DOWN});
     input.fire('keyup', {keyCode: Event.KEY_DOWN});
-    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li').getLast());
+    value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li').last());
   },
   'should move up the list when the down arrow is pressed': function(){
     // Prototype is too dumb :(
