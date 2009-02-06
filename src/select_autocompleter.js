@@ -101,7 +101,6 @@ var SelectAutocompleter = Class.create({
   
   onBlur: function(){
     this.dropDown.hide();
-    
     if (this.termChosen != null){
       this.element.value = this.termChosen;
       this.select.value = this.data[this.termChosen].value;
@@ -155,6 +154,7 @@ var SelectAutocompleter = Class.create({
     }else if (keyPressed == Event.KEY_RETURN || keyPressed == Event.KEY_ENTER){
       event.stop(); // to prevent the form from being submitted
       this.termChosen = this.highlightedChoice.getAttribute('rawText');
+      this.onBlur();
       this.element.blur();
       
     // Regular keys (filtering for something)
@@ -211,6 +211,7 @@ var SelectAutocompleter = Class.create({
       
       choice.observe('click', function(){
         this.termChosen = scoredTerm[1];
+        this.onBlur();
       }.bind(this));
       choice.observe('mouseover', this.highlight.bind(this, choice));
       
