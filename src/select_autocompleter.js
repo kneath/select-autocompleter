@@ -52,13 +52,16 @@ var SelectAutocompleter = Class.create({
   
   initialize: function(select, options){
     this.select = $(select);
-    this.setOptions(options)
+    this.setOptions(options);
+    
+    // Convert MooTools type templates to Prototype type templates
+    this.options.template = this.options.template.replace(/{(.+)}/g, "#{$1}");
     
     // Setup the autocompleter element
     var wrapper = new Element('div', {'class': 'autocomplete'});
     this.element = new Element('input', {'class': 'textfield ' + this.select.className});
     this.dropDown = new Element('ul', {'class': 'auto-dropdown ' + this.select.className});
-    this.dropDown.setStyle('display', 'none');
+    this.dropDown.hide();
     this.element.observe('focus', this.onFocus.bind(this));
     this.element.observe('blur', function(){ this.onBlur.delay(100, this); }.bind(this));
     this.element.observe('keydown', this.keyListener.bind(this));
@@ -76,39 +79,37 @@ var SelectAutocompleter = Class.create({
       this.options.templateAttributes.each(function(attr){
         dataItem[attr] = option.getAttribute(attr);
       });
-      var text = option.cleanWhitespace().firstChild.value;
+      var text = option.innerHTML.strip();
       this.data[text] = $H(dataItem).merge({value: option.value}).toObject();
       
       this.terms.push(text);
     }.bind(this));
     
     // Prepopulate the select tag's selected option
-    this.element.value =  $(this.select.options[this.select.selectedIndex]).cleanWhitespace().firstChild.value;
+    this.element.value =  $(this.select.options[this.select.selectedIndex]).innerHTML.strip();
   },
   
   setOptions: function(options){
-    Object.extend(this.options, options);
+    this.options = $H(this.options).merge(options).toObject();
   },
   
   onFocus: function(){
-    this.element.set('value', '');
-    this.dropDown.setStyle('display', '');
+    this.element.value = '';
+    this.dropDown.show();
     this.updateTermsList();
-    
-    this.fireEvent('onFocus');
   },
   
   onBlur: function(){
     this.dropDown.setStyle('display', 'none');
     
     if (this.termChosen != null){
-      this.element.set('value', this.termChosen);
-      this.select.set('value', this.data[this.termChosen].value);
+      this.element.value = this.termChosen;
+      this.select.value = this.data[this.termChosen].value;
     }else{
-      this.element.set('value', $(this.select.options[this.select.selectedIndex]).get('text'));      
+      this.element.value = $(this.select.options[this.select.selectedIndex]).innerHTML.strip();
     }
     
-    this.fireEvent('onBlur');
+    this.fire('onBlur');
   },
   
   keyListener: function(event){
@@ -167,7 +168,7 @@ var SelectAutocompleter = Class.create({
   },
   
   updateTermsList: function(){
-    var filterValue = this.element.get('value');
+    var filterValue = this.element.value;
     this.buildFilteredTerms(filterValue);
     
     this.dropDown.empty();
@@ -201,20 +202,20 @@ var SelectAutocompleter = Class.create({
       }
       this.options.templateAttributes.each(function(attr){
         template["attr" + attr.capitalize()] = this.data[template.rawText][attr];
-      }, this);
+      }.bind(this));
       
       // Build the output element for the dropDown
       var choice = new Element('li');
-      choice.innerHTML =  this.options.template.substitute(template);
+      choice.innerHTML =  this.options.template.interpolate(template);
       choice.setAttribute('rawText', scoredTerm[1]);
       
-      choice.addEvent('click', function(){
+      choice.observe('click', function(){
         this.termChosen = scoredTerm[1];
       }.bind(this));
-      choice.addEvent('mouseover', this.highlight.bind(this, choice));
+      choice.observe('mouseover', this.highlight.bind(this, choice));
       
       this.dropDown.appendChild(choice);
-    }, this);
+    }.bind(this));
   },
   
   buildFilteredTerms: function(filter){
@@ -225,7 +226,7 @@ var SelectAutocompleter = Class.create({
       var score = term.toLowerCase().score(filter.toLowerCase())
       if (score < this.options.cutoffScore) return;
       this.filteredTerms.push([score, term]);
-    }, this);
+    }.bind(this));
     
     // Sort the terms
     this.filteredTerms.sort(function(a, b) { return b[0] - a[0]; });
