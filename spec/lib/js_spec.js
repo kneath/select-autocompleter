@@ -571,6 +571,7 @@ JSSpec.Logger.prototype.onSpecStart = function(spec) {
 JSSpec.Logger.prototype.onSpecEnd = function(spec) {
 	var spec_list = document.getElementById("spec_" + spec.id + "_list");
 	var spec_log = document.getElementById("spec_" + spec.id);
+	var heading = spec_log.getElementsByTagName('h3')[0];
 	var examples = document.getElementById("spec_" + spec.id + "_examples");
 	var className = spec.hasException() ? "exception" : "success";
 
