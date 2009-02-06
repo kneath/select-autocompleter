@@ -109,7 +109,6 @@ var SelectAutocompleter = Class.create({
       this.element.value = $(this.select.options[this.select.selectedIndex]).innerHTML.strip();
     }
     
-    this.fire('onBlur');
   },
   
   keyListener: function(event){

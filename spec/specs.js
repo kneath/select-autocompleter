@@ -72,13 +72,17 @@ describe("Keyboard Interaction", {
   'after each': function(){
     input.value = '';
     input.fire('keydown', {key: ' '});
-    input.fire('blur');
+    // Prototype is too dumb :(
+    // input.fire('blur');
+    Instance.onBlur();
   },
   
   
   'should show the drop down on focus': function(){
     value_of(dropdown.getStyle('display')).should_be('none');
-    input.fire('focus');
+    // Prototype is too dumb :(
+    // input.fire('focus');
+    Instance.onFocus();
     value_of(dropdown.getStyle('display')).should_not_be('none');
   },
   'should filter the list when characters are typed in': function(){
@@ -88,14 +92,18 @@ describe("Keyboard Interaction", {
     value_of(dropdown.getElementsBySelector('li')).should_have_at_most(1, "items");
   },
   'should move down the list when the down arrow is pressed': function(){
-    input.fire('focus');
+    // Prototype is too dumb :(
+    // input.fire('focus');
+    Instance.onFocus();
     input.fire('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
     input.fire('keydown', {key: 'down'});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
   },
   'should not go past the last item when the down arrow is pressed': function(){
-    input.fire('focus');
+    // Prototype is too dumb :(
+    // input.fire('focus');
+    Instance.onFocus();
     value_of(dropdown.getElementsBySelector('li')).should_have_at_most(6, "items");
     input.fire('keydown', {key: 'down'});
     input.fire('keydown', {key: 'down'});
@@ -107,7 +115,9 @@ describe("Keyboard Interaction", {
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li').getLast());
   },
   'should move up the list when the down arrow is pressed': function(){
-    input.fire('focus');
+    // Prototype is too dumb :(
+    // input.fire('focus');
+    Instance.onFocus();
     input.fire('keydown', {key: 'down'});
     input.fire('keydown', {key: 'down'});
     input.fire('keydown', {key: 'down'});
@@ -118,7 +128,9 @@ describe("Keyboard Interaction", {
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
   },
   'should not go past the first item when the up arrow is pressed': function(){
-    input.fire('focus');
+    // Prototype is too dumb :(
+    // input.fire('focus');
+    Instance.onFocus();
     input.fire('keydown', {key: 'down'});
     input.fire('keydown', {key: 'down'});
     input.fire('keydown', {key: 'down'});
