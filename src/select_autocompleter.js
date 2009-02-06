@@ -64,7 +64,7 @@ var SelectAutocompleter = Class.create({
     this.dropDown.hide();
     this.element.observe('focus', this.onFocus.bind(this));
     this.element.observe('blur', function(){ this.onBlur.delay(100, this); }.bind(this));
-    this.element.observe('keydown', this.keyListener.bind(this));
+    this.element.observe('keyup', this.keyListener.bind(this));
     
     
     // Hide the select tag

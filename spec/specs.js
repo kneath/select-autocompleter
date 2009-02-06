@@ -71,7 +71,7 @@ describe("Keyboard Interaction", {
   
   'after each': function(){
     input.value = '';
-    input.fire('keydown', {key: ' '});
+    input.fire('keyup', {keyCode: ' '});
     // Prototype is too dumb :(
     // input.fire('blur');
     Instance.onBlur();
@@ -88,16 +88,16 @@ describe("Keyboard Interaction", {
   'should filter the list when characters are typed in': function(){
     input.fire('focus');
     input.value = "kamr";
-    input.fire('keydown', {key: 'r'});
+    input.fire('keyup', {keyCode: 'r'});
     value_of(dropdown.getElementsBySelector('li')).should_have_at_most(1, "items");
   },
   'should move down the list when the down arrow is pressed': function(){
     // Prototype is too dumb :(
     // input.fire('focus');
     Instance.onFocus();
-    input.fire('keydown', {key: 'down'});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
-    input.fire('keydown', {key: 'down'});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
   },
   'should not go past the last item when the down arrow is pressed': function(){
@@ -105,40 +105,40 @@ describe("Keyboard Interaction", {
     // input.fire('focus');
     Instance.onFocus();
     value_of(dropdown.getElementsBySelector('li')).should_have_at_most(6, "items");
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li').getLast());
   },
   'should move up the list when the down arrow is pressed': function(){
     // Prototype is too dumb :(
     // input.fire('focus');
     Instance.onFocus();
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[2]);
-    input.fire('keydown', {key: 'up'});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
-    input.fire('keydown', {key: 'up'});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
   },
   'should not go past the first item when the up arrow is pressed': function(){
     // Prototype is too dumb :(
     // input.fire('focus');
     Instance.onFocus();
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
-    input.fire('keydown', {key: 'down'});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
+    input.fire('keyup', {keyCode: Event.KEY_DOWN});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[2]);
-    input.fire('keydown', {key: 'up'});
-    input.fire('keydown', {key: 'up'});
-    input.fire('keydown', {key: 'up'});
-    input.fire('keydown', {key: 'up'});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[0]);
   },
   
@@ -148,7 +148,7 @@ describe("Keyboard Interaction", {
   },
   'should move the keyboard from where the mouse is hovering': function(){
     dropdown.getElementsBySelector('li')[2].fire('mouseover');
-    input.fire('keydown', {key: 'up'});
+    input.fire('keyup', {keyCode: Event.KEY_UP});
     value_of(Instance.highlightedChoice).should_be(dropdown.getElementsBySelector('li')[1]);
   }
 });
